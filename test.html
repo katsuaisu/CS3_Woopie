@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woopie's Bakery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #E0F7FA 0%, #FFFDE7 100%);
+            background-size: 100% 200%;
+            animation: gradientShift 15s ease infinite alternate;
+            color: #6D4C41;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: #ffffff;
+            border-radius: 1.5rem; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 1.5rem;
+            animation: slideDown 0.7s ease-out;
+            z-index: 100; 
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; 
+            text-decoration: none; 
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            animation: bounce 2.5s infinite ease-in-out;
+        }
+
+        .logo h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #5D4037;
+            margin: 0;
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: #775D4B;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 0.25rem 0;
+            white-space: nowrap; 
+        }
+        
+        .navigation a:visited {
+            color: #775D4B; 
+        }
+        
+        .navigation a:hover {
+            color: #5D4037; 
+        }
+        
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #FF7F50; 
+            transition: width 0.3s ease;
+        }
+
+        .navigation a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 4rem 1rem 6rem;
+            margin-bottom: 2rem;
+            background: #FFECB3;
+            border-bottom-left-radius: 5rem;
+            border-bottom-right-radius: 5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: bubble 15s ease-in-out infinite alternate;
+        }
+
+        .hero::before {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: -5%;
+            animation-duration: 18s;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero::after {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            right: -5%;
+            animation-duration: 20s;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            color: #D32F2F; 
+            margin-bottom: 0.5rem;
+            animation: textPop 1s ease-out forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #795548;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: textPop 1s ease-out forwards;
+            animation-delay: 0.7s;
+            opacity: 0;
+        }
+
+        .hero .main-image-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 2rem;
+            animation: float 4s ease-in-out infinite;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .hero .main-image-wrapper img {
+            width: 350px;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            border-radius: 1.5rem;
+        }
+
+        .hero .cta-button {
+            display: inline-block;
+            background-color: #FF7F50; 
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(255, 127, 80, 0.4);
+            animation: buttonPulse 2s infinite ease-in-out;
+        }
+
+        .hero .cta-button:hover {
+            background-color: #FF6347; 
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 99, 71, 0.5);
+        }
+        
+        .features-section {
+            padding: 3rem 1rem;
+            background-color: #FFFFFF;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+            margin: 2rem auto;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .features-section h3 {
+            font-size: 2rem;
+            color: #D32F2F;
+            margin-bottom: 2.5rem;
+        }
+
+        .feature-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .feature-item {
+            background-color: #FFF8E1; 
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            flex: 1 1 calc(33% - 2rem); 
+            max-width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: popIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .feature-item:nth-child(1) { animation-delay: 1.2s; }
+        .feature-item:nth-child(2) { animation-delay: 1.4s; }
+        .feature-item:nth-child(3) { animation-delay: 1.6s; }
+
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,127,80,0.1) 0%, rgba(255,255,255,0) 50%, rgba(255,127,80,0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .feature-item:hover::before {
+            opacity: 1;
+        }
+
+        .feature-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 4px solid #FFCDD2; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .feature-item h4 {
+            font-size: 1.25rem;
+            color: #5D4037;
+            margin-bottom: 0.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-item p {
+            font-size: 0.95rem;
+            color: #8D6E63;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-section {
+            padding: 3rem 1rem;
+            background: #FFE0B2; 
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+            margin: 2rem auto;
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-section h3 {
+            font-size: 2rem;
+            color: #D32F2F;
+            margin-bottom: 2.5rem;
+        }
+
+        .testimonial-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 0 auto;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            position: relative;
+            animation: slideInUp 0.8s ease-out forwards;
+            animation-delay: 1.8s;
+            opacity: 0;
+        }
+
+        .testimonial-card img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #FFCC80;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: #795548;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card .author {
+            font-weight: 600;
+            color: #5D4037;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #FAF8F0; 
+            color: #8D6E63;
+            font-size: 0.9rem;
+            margin-top: 4rem; 
+            width: 100%;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-8px);
+            }
+            60% {
+                transform: translateY(-4px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes textPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translate(10%, -10%) scale(1.05);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(0, -20%) scale(1.1);
+                opacity: 0.7;
+            }
+            75% {
+                transform: translate(-10%, -10%) scale(1.05);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column; 
+                gap: 1rem;
+            }
+            
+            .navigation {
+                justify-content: center;
+                flex-wrap: wrap; 
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero .main-image-wrapper img {
+                width: 280px;
+                height: 280px;
+            }
+
+            .feature-item {
+                flex: 1 1 calc(50% - 2rem); 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .hero .main-image-wrapper img {
+                width: 250px;
+                height: 250px;
+            }
+            .feature-item {
+                flex: 1 1 100%; 
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="header container">
+        <a href="#" class="logo">
+            <img src="https://media.discordapp.net/attachments/1134457406856888353/1430912592557244506/e6jOagAAAAZJREFUAwDZn7IdroTCUwAAAABJRU5ErkJggg.png?ex=68fb80b3&is=68fa2f33&hm=f0ab48e2f754af7d6985dd9b49ab77899b8680079006cebb807c29a617cdd605&=&format=webp&quality=lossless&width=540&height=540"
+            alt="Woopie's Bakery Icon">
+            <h1>Woopie's Bakery</h1>
+        </a>
+        
+        <nav class="navigation">
+            <a href="#">1st Graded Exercise</a>
+            <a href="#">2nd Graded Exercise</a>
+            <a href="#">Menu</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Woopie's Cookies!</h2>
+                <p>Woopie will love you if you try Woopie's cookies.</p>
+                
+                <div class="main-image-wrapper">
+                    <img src="https://media.discordapp.net/attachments/1134457406856888353/1430912592054063114/gSYCCAAAABklEQVQDAPlRRQnUoHUgAAAAAElFTkSuQmCC.png?ex=68fb80b3&is=68fa2f33&hm=026dff0f27e69b739880d63aa9c5c91c2d9f87629d7b51e97bd628eb35c4d524&=&format=webp&quality=lossless&width=626&height=540" alt="Woopie's delicious cookies">
+                </div>
+                <a href="#" class="cta-button">Explore Our Treats!</a>
+            </div>
+        </section>
+
+        <section class="features-section container">
+            <h3>Why is Woopie's Cookies the best cookies ever in the world?</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <img src="https://media.discordapp.net/attachments/1134457406856888353/1430917831574163526/9sdZpcAAAABklEQVQDAIyI2wZ1ZJE0AAAAAElFTkSuQmCC.png?ex=68fb8594&is=68fa3414&hm=51c8fb7dfc9b84f9cddbe1155151aa624ebad9ded0b4312b5769e47d3f8ec1ab&=&format=webp&quality=lossless&width=304&height=540">
+                    <h4>Freshly Baked</h4>
+                    <p>Every morning, we make our cookies from fresh Woopies! (jk)</p>  
+                </div>
+                <div class="feature-item">
+                    <img src="https://media.discordapp.net/attachments/1134457406856888353/1430917832132001893/isAAAAGSURBVAMAOtsHlv4FCcwAAAAASUVORK5CYII.png?ex=68fb8594&is=68fa3414&hm=4551125e11296e0c95040589ccc30351de8d7cab9213e83a22d65887ac333348&=&format=webp&quality=lossless&width=540&height=540">
+                    <h4>Made with Love</h4>
+                    <p>Quagsire and Woopie love their cookies</p>
+                </div>
+                <div class="feature-item">
+                    <img src="https://media.discordapp.net/attachments/1134457406856888353/1430917832484327534/7oIFG8AAAAGSURBVAMAjj26FwquH1AAAAAASUVORK5CYII.png?ex=68fb8594&is=68fa3414&hm=49406c76ce5d6eb35cf749a15ce8ccb9d035c538b6c12494388b09520891e35a&=&format=webp&quality=lossless&width=540&height=540">
+                    <h4>Delicious Flavors</h4>
+                    <p>Quagsire is very hungry for Woopie's cookies.</p>    
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonial-section container">
+            <h3>What Our Customers Say</h3>
+            <div class="testimonial-card">
+                <img src="https://i.pinimg.com/1200x/22/3a/9b/223a9b04ab73c3dd29d00d4eec3932b9.jpg">
+                <p>"Woopie so yummy. Love Woopie. I love Woopie. Woopie"</p>
+                <div class="author">- Not Woopie </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Woopie's Bakery. All Rights Reserved. ♥</p>
+    </footer>
+
+</body>
+</html>
